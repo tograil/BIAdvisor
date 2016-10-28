@@ -1,0 +1,14 @@
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\bin\Debug\BIAdvisor.BL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\bin\Debug\BIAdvisor.BL.pdb
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\bin\Debug\BIAdvisor.DAL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\bin\Debug\BIAdvisor.DAL.pdb
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.csprojResolveAssemblyReference.cache
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.pdb
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\bin\Debug\BIAdvisor.BL.dll
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\bin\Debug\BIAdvisor.BL.pdb
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\bin\Debug\BIAdvisor.DAL.dll
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\bin\Debug\BIAdvisor.DAL.pdb
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.csprojResolveAssemblyReference.cache
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.dll
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.BL\obj\Debug\BIAdvisor.BL.pdb

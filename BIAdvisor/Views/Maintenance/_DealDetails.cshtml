@@ -1,0 +1,313 @@
+﻿@model BIAdvisor.Web.Models.DealMaintenanceViewModel
+@using System.Data
+@using System.Web.Optimization
+@using BIAdvisor.Web.Models
+@{
+    string IsPayeePublished = ViewBag.IsPayeePublished;
+    UserRole userRole = UserRole.ReadOnly;
+    Enum.TryParse<UserRole>(ViewBag.userRole != null ? ViewBag.userRole.ToString() : "", out userRole);
+
+    DataRow calDesc = ViewBag.dCalculationCode != null ? ViewBag.dCalculationCode as DataRow : null;
+    string json = calDesc != null && calDesc["CalculationJSON"] != null ? calDesc["CalculationJSON"].ToString() : "";
+    string desc = calDesc != null && calDesc["CalculationDescription"] != null ? calDesc["CalculationDescription"].ToString() : "";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+<style>
+    .grey {
+        background-color: #ddd;
+    }
+
+    .select2-results__option--highlighted .grey{
+        background-color: #5897fb;
+    }
+
+    body {
+        padding-top: 15px !important;
+        background: #fff !important;
+    }
+
+    label.required {
+        font-weight: bold;
+    }
+
+        label.required:after {
+            color: #E32;
+            content: ' *';
+            display: inline;
+        }
+
+    label.optional {
+        font-weight: bold;
+    }
+
+    .mb10 {
+        margin-bottom: 4px;
+        padding-left: 15px;
+    }
+
+    .mb20 {
+        margin-bottom: 10px;
+        padding-left: 15px;
+    }
+
+    input, select, textarea {
+        /*font-size: 14px;*/
+        padding: 2px;
+    }
+
+    label {
+        padding-left: 5px;
+        padding-top:4px;
+    }
+</style>
+
+<div class="row" id="frmDeal">
+    @using (Html.BeginForm("_DealMaintenance", "Maintenance", FormMethod.Post, new { @id = "DealMaintenance" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("IsPayeePublished", IsPayeePublished)
+        @Html.HiddenFor(m => m.PayeeDealKey)
+        @Html.HiddenFor(m => m.PayeeKey)
+        @Html.HiddenFor(m => m.PayeeType)
+        @*@Html.ValidationSummary()*@
+        <div class="col-xs-12">
+            <div class="mb10 nop">
+                <h3 style="width:150px; display:inline-block; margin:15px 0 10px;">Deal Criteria</h3>
+            </div>
+            <div class="mb10">
+                <label for="DealCriteria" style="width:145px;">Criteria: </label>
+                <select name="DealCriteria" id="DealCriteria" data-s2val="@Model.DealCriteria" style="width:735px;"></select>
+                <span class="sort12"></span>
+                <span class="sortaz" style="display:none;"></span>
+                @*@Html.DropDownListFor(m => m.DealCriteria, ViewBag.vbDealCriteria as SelectList, new { @style = "width:735px", @class = "s2" })*@
+            </div>
+
+            <div class="mb10">
+                <label for="CarrierID" style="width:145px;">Carrier / Line: </label>
+                @* This will be the table dropdown, so we will populate it in a different way. *@
+                <select name="CarrierID" id="CarrierID" data-s2val="@Model.CarrierID" style="width:275px;"></select>
+                /
+                @Html.TextBoxFor(m => m.ProductLine, new { @style = "width:2%", @readonly = "readonly" })
+
+
+                <label for="CarrierAttribute" style="width:146px;padding-left:6px;">Carrier Attribute: </label>
+                @Html.DropDownListFor(m => m.CarrierAttribute, ViewBag.dCarrierAttribute as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="ProductID" style="width:145px;">Product: </label>
+                @Html.DropDownListFor(m => m.ProductID, ViewBag.dProduct as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="ProductAttribute" style="width:177px; padding-left:38px;">Product Attribute: </label>
+                @Html.DropDownListFor(m => m.ProductAttribute, ViewBag.dProductAttribute as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="Wholesaler" style="width:145px;">Wholesaler: </label>
+                @Html.DropDownListFor(m => m.Wholesaler, ViewBag.dWholesaler as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="WholesalerRole" style="width:177px; padding-left:38px;">Role: </label>
+                @Html.DropDownListFor(m => m.WholesalerRole, Enumerable.Empty<SelectListItem>(), new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="BrokerDealer" style="width:145px;">BD: </label>
+                @Html.DropDownListFor(m => m.BrokerDealer, ViewBag.dBrokerDealer as SelectList, new { @style = "width:275px", @class = "s2tag" })
+
+                <label for="BrokerDealerAttribute" style="width:177px; padding-left:38px;">BD Attribute: </label>
+                @Html.DropDownListFor(m => m.BrokerDealerAttribute, ViewBag.dBrokerDealerAttribute as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="BrokerDealerInHierarchy" style="width:145px;">BD In Hierarchy: </label>
+                @Html.DropDownListFor(m => m.BrokerDealerInHierarchy, ViewBag.BDInHierarchy as SelectList, "", new { @style = "width:275px", @class = "s2" })
+
+                <label for="SubmitDate" style="width:177px; padding-left:38px;">Submit Date: </label>
+                @Html.TextBox("SubmitDate", Model.SubmitDate.HasValue ? Model.SubmitDate.Value.ToShortDateString() : "", new { @style = "width:100px" })
+            </div>
+
+            <div class="mb10">
+                <label for="Channel" style="width:145px;">Channel: </label>
+                @Html.DropDownListFor(m => m.Channel, ViewBag.dChannel as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="StatementDate" style="width:177px; padding-left:38px;">Statement Date: </label>
+                @Html.TextBox("StatementDate", Model.StatementDate.HasValue ? Model.StatementDate.Value.ToShortDateString() : "", new { @style = "width:100px" })
+            </div>
+
+            <div class="mb10">
+                <label for="Internal" style="width:145px;">Internal: </label>
+                @Html.DropDownListFor(m => m.Internal, ViewBag.dInternal as SelectList, "", new { @style = "width:275px", @class = "s2tag" })
+            </div>
+
+            <div class="mb10">
+                <label for="ProducerID" style="width:145px;">Producer: </label>
+                @Html.DropDownListFor(m => m.ProducerID, ViewBag.dProducer as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="MSA" style="width:177px; padding-left:38px;">MSA: </label>
+                @Html.DropDownListFor(m => m.MSA, ViewBag.dBrokerDealer as SelectList, new { @style = "width:275px", @class = "s2tag" })
+            </div>
+
+            <div class="mb10">
+                <label for="Recruiter" style="width:145px;">Recruiter: </label>
+                @Html.DropDownListFor(m => m.Recruiter, ViewBag.dRecruiter as SelectList, new { @style = "width:275px", @class = "s2tag" })
+
+                <label for="RecruiterAttribute" style="width:177px; padding-left:38px;">Recruiter Attribute: </label>
+                @Html.DropDownListFor(m => m.RecruiterAttribute, ViewBag.dRecruiterAttribute as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="MPPartner" style="width:145px;">MP Partner: </label>
+                @Html.DropDownListFor(m => m.MPPartner, ViewBag.dMarketingProgram as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="Notes" style="padding-left:38px;">Notes: </label>
+            </div>
+
+            <div class="mb10">
+                <label for="PayeeGroup" style="width:145px;vertical-align:top;">Payee Group: </label>
+                @Html.DropDownListFor(m => m.PayeeGroup, ViewBag.dPayeeGroup as SelectList, "", new { @style = "width:275px", @class = "s2" })
+
+                @Html.TextAreaFor(m => m.Notes, new { @style = "margin-left:40px; width:417px;" })
+            </div>
+        </div>
+        //Deal Calculation
+        <div class="col-xs-12">
+            @Html.Hidden("CalJson", json)
+            <h3 style="margin-top:0;">
+                Deal Calculation
+            </h3>
+
+            <div class="mb10">
+                <div class="row nom nop">
+                    <div class="col-xs-1 nop" style="width:350px;">
+                        <div style="margin-bottom:8px;">
+                            <label for="CalculationID" style="width:145px;" class="required">Calculation Code: </label>
+                            <select name="CalculationID" id="CalculationID" required style="width:200px;">
+                                <option value="@Model.CalculationID">@Model.CalculationCode</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="DealCap" style="width:145px;">Deal Cap: </label>
+                            @Html.TextBoxFor(m => m.DealCap, null, new { @style = "width:100px;", @class = "decimal" })
+                        </div>
+                    </div>
+                    <div class="col-xs-1 nop" style="width:530px;">
+                        @Html.TextArea("CalculationDescription", desc, new { @style = "width:530px;resize: none;", rows = 3, @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb10">
+                <label for="CarrierLevel" style="width:145px;">Carrier Level: </label>
+                @Html.DropDownListFor(m => m.CarrierLevel, ViewBag.dCarrierLevel as SelectList, "", new { @style = "width:200px", @class = "s2tag" })
+
+                <label for="Street" style="width:60px;">Street: </label>
+                @Html.CheckBoxFor(m => m.Street)
+
+                <label for="LOA" style="width:50px;">LOA: </label>
+                @Html.CheckBoxFor(m => m.LOA)
+
+                <label for="ExpDelta" style="width:275px; padding-right: 10px; text-align: right;">Exp Delta: </label>
+                @Html.TextBoxFor(m => m.ExpDelta, new { @style = "width: 101px;" })
+            </div>
+
+            <div class="mb10">
+                <label for="VirtualCarrierLevel" style="width:145px;">Virtual Level: </label>
+                @Html.DropDownListFor(m => m.VirtualCarrierLevel, ViewBag.dCarrierLevel as SelectList, "", new { @style = "width:200px", @class = "s2tag" })
+
+                <label for="PayIndexKey" style="width:253px;text-align:right;">Pay Index: </label>
+                @Html.DropDownListFor(m => m.PayIndexKey, ViewBag.dPayIndex as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="PctGross" style="width:145px">Pct Gross:</label>
+                @Html.TextBoxFor(m => m.PctGross, null, new { @style = "width:100px", @class = "decimal" })
+
+                <label for="DeductionModel" style = "width:353px;text-align:right;">Deduction: </label>
+                @Html.DropDownListFor(m => m.DeductionModel, ViewBag.dDeductions as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="PctPremium" style="width:145px">Pct Premium:</label>
+                @Html.TextBoxFor(m => m.PctPremium, null, new { @style = "width:100px", @class = "decimal" })
+
+                <label for="Directive" style = "width:353px;text-align:right;">Directive: </label>
+                @Html.DropDownListFor(m => m.Directive, ViewBag.dDirective as SelectList, new { @style = "width:275px;", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="PctOverride" style="width:145px">Pct Override:</label>
+                @Html.TextBoxFor(m => m.PctOverride, null, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="margin-left:370px;">Bonus</label>
+                <label style="margin-left:105px;">Push COC</label>
+            </div>
+
+            <div class="mb10">
+                <label for="PctCarrierLevel" style="width:145px">Pct Carrier Level:</label>
+                @Html.TextBoxFor(m => m.PctCarrierLevel, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:355px; text-align:right;">Amount 1:</label>
+                @Html.TextBoxFor(m => m.Amount1, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:65px;text-align:right;padding:0;">Rate 1:</label>
+                @Html.TextBoxFor(m => m.Rate1, new { @style = "width:100px", @class = "decimal" })
+            </div>
+
+            <div class="mb10">
+                <label for="PctWholesalerNet" style="width:145px">Pct Wholesaler Net:</label>
+                @Html.TextBoxFor(m => m.PctWholesalerNet, null, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:355px; text-align:right;">Amount 2:</label>
+                @Html.TextBoxFor(m => m.Amount2, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:65px;text-align:right;padding:0;">Rate 2:</label>
+                @Html.TextBoxFor(m => m.Rate2, null, new { @style = "width:100px", @class = "decimal" })
+            </div>
+            <div class="mb10">
+                <label style="width:145px;">Contingent Bonus:</label>
+                @Html.TextBoxFor(m => m.ContingentBonus, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:355px; text-align:right;">Amount 3:</label>
+                @Html.TextBoxFor(m => m.Amount3, null, new { @style = "width:100px", @class = "decimal" })
+
+                <label style="width:65px;text-align:right;padding:0;">Rate 3:</label>
+                @Html.TextBoxFor(m => m.Rate3, null, new { @style = "width:100px", @class = "decimal" })
+            </div>
+            <div class="mb10">
+                <label style="width:145px;">Year End Bonus:</label>
+                @Html.TextBoxFor(m => m.YearEndBonus, new { @style = "width:100px", @class = "decimal" })
+            </div>
+            <div class="col-xs-12">
+                <label style="width:145px;">Recruiter CR/DR:</label>
+                @Html.TextBoxFor(m => m.RecruiterCredit, null, new { @style = "width:44px;", @class = "decimal" }) /
+                @Html.TextBoxFor(m => m.RecruiterDebit, null, new { @style = "width:44px;", @class = "decimal" })
+
+                @if (IsPayeePublished != "Y" || userRole == UserRole.SuperUser)
+                {
+                    <input type="submit" disabled id="btnsave" value="Save" style="width:120px;margin-left:120px;" />
+                    <div class="@(Model.PayeeDealKey != 0 ? "deleteDeal" : "") pull-right"></div>
+                }
+            </div>
+        </div>
+    }
+</div>
+@*<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/jquery.dirtyforms.min.js"></script>*@
+@Styles.Render("~/Content/s2")
+<script>
+    //Messages
+    var message = '@ViewBag.Message';
+    var msgType = '@ViewBag.AlertType';
+    msgType = msgType != '' ? msgType.replace('alert-', '') : '';
+    if (message != '') {
+        parent.toastr[msgType](message);
+    }
+
+    var criteria = @Html.Raw(Json.Encode(ViewBag.dDealCriteria));
+    var carriers = @Html.Raw(Json.Encode(ViewBag.dCarrierCombination));
+    var calCode = @Html.Raw(Json.Encode(ViewBag.CalCode));
+</script>
+@Scripts.Render("~/bundles/deal")
+@*<script src="~/Scripts/custom/deal.js"></script>*@

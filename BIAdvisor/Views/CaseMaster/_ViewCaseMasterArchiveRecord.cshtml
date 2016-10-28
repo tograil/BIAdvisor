@@ -1,0 +1,113 @@
+﻿@using System.Web.Optimization
+@model BIAdvisor.Web.Models.CaseMaster.CaseMasterArchiveViewModel
+
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/s2")
+@Scripts.Render("~/bundles/jquery")
+
+<style>
+    body {
+        padding-top: 15px !important;
+        background: #fff !important;
+    }
+</style>
+
+<div class="row" id="frmCaseMaster">
+    <div>
+        <div class="col-xs-12">
+            <div class="mb10 nop">
+                <h3 style="display:inline-block; margin:15px 0 10px;">CaseMaster - Archived Record</h3>
+            </div>
+            <div class="mb10">
+                <label for="CaseID" style="width:140px;">CaseID: </label>
+                @Html.TextBoxFor(m => m.CaseID, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.CaseID)
+
+                <label for="PolNo" style="width:140px;">Policy #: </label>
+                @Html.TextBoxFor(m => m.PolNo, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.PolNo)
+            </div>
+
+            <div class="mb10">
+                <label for="CrtDate" style="width:140px;">Created Date: </label>
+                @Html.TextBoxFor(m => m.CrtDate, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.CrtDate)
+
+                <label for="AgtNo" style="width:140px;">Agent #: </label>
+                @Html.TextBoxFor(m => m.AgtNo, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtNo)
+            </div>
+
+            <div class="mb10">
+                <label for="AgtName" style="width:140px;">Agent Name: </label>
+                @Html.TextBoxFor(m => m.AgtName, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtName)
+
+                <label for="AgtPct" style="width:140px;">Agent %: </label>
+                @Html.TextBoxFor(m => m.AgtPct, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtPct)
+            </div>
+
+            <div class="mb10">
+                <label for="ComLvl" style="width:140px;">Comm Level: </label>
+                @Html.TextBoxFor(m => m.ComLvl, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.ComLvl)
+
+            </div>
+            <hr />
+
+            <div class="mb10">
+                <label for="Wholesaler" style="width:140px;">Wholesaler: </label>
+                @Html.TextBoxFor(m => m.Wholesaler, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="PayToWholesaler" style="width:140px;">PayToWholesaler: </label>
+                @Html.TextBoxFor(m => m.PayToWholesaler, new { @style = "width:275px",@disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="Internal" style="width:140px;">Internal: </label>
+                @Html.TextBoxFor(m => m.Internal, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="Recruiter" style="width:140px;">Recruiter: </label>
+                @Html.TextBoxFor(m => m.Recruiter, new { @style = "width:275px",@disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="Channel" style="width:140px;">Channel: </label>
+                @Html.TextBoxFor(m => m.Channel, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="PlChannel" style="width:140px;">PL Channel: </label>
+                @Html.TextBoxFor(m => m.PlChannel, new { @style = "width:275px",@disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="NSM" style="width:140px;">NSM: </label>
+                @Html.TextBoxFor(m => m.NSM, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="BrokerDealer" style="width:140px;">BrokerDealer: </label>
+                @Html.TextBoxFor(m => m.BrokeDealer, new { @style = "width:275px",@disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="ThruBD" style="width:140px;">ThruBD: </label>
+                @Html.TextBoxFor(m => m.ThruBD, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="Agency" style="width:140px;">Agency: </label>
+                @Html.TextBoxFor(m => m.Agency, new { @style = "width:275px",@disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="AgencyMP" style="width:140px;">AgencyMP: </label>
+                @Html.TextBoxFor(m => m.AgencyMP, new { @style = "width:275px",@disabled = "disabled" })
+
+                <label for="ArchiveDateTime" style="width:140px;">Archive DateTime: </label>
+                @Html.TextBoxFor(m => m.ArchiveDateTime, new { @style = "width:275px", @disabled = "disabled" })
+            </div>
+
+            <div class="mb10">
+                <label for="ArchiveReason" style="width:140px;vertical-align:top;">Archive Reason: </label>
+                @Html.TextAreaFor(m => m.ArchiveReason, new { @style = "width:700px", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+</div>

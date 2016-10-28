@@ -1,0 +1,149 @@
+﻿@using System.Web.Optimization
+@model BIAdvisor.Web.Models.CaseMaster.CaseMasterEditViewModel
+
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/s2")
+@Scripts.Render("~/bundles/jquery")
+
+<style>
+    body {
+        padding-top: 15px !important;
+        background: #fff !important;
+    }
+</style>
+
+<div class="row" id="frmCaseMaster">
+    @using (Html.BeginForm("_EditCaseMasterRecord", "CaseMaster", FormMethod.Post, new { @id = "CMRecordEdit" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.AGPCOMID)
+        <div class="col-xs-12">
+            <div class="mb10 nop">
+                <h3 style="display:inline-block; margin:15px 0 10px;">CaseMaster - Edit Record</h3>
+            </div>
+            @* Read only fields *@
+            <div class="mb10">
+                <label for="CaseID" style="width:140px;">CaseID: </label>
+                @Html.TextBoxFor(m => m.CaseID, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.CaseID)
+
+                <label for="PolNo" style="width:140px;">Policy #: </label>
+                @Html.TextBoxFor(m => m.PolNo, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.PolNo)
+            </div>
+
+            <div class="mb10">
+                <label for="CrtDate" style="width:140px;">Created Date: </label>
+                @Html.TextBoxFor(m => m.CrtDate, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.CrtDate)
+
+                <label for="AgtNo" style="width:140px;">Agent #: </label>
+                @Html.TextBoxFor(m => m.AgtNo, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtNo)
+            </div>
+
+            <div class="mb10">
+                <label for="AgtName" style="width:140px;">Agent Name: </label>
+                @Html.TextBoxFor(m => m.AgtName, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtName)
+
+                <label for="AgtPct" style="width:140px;">Agent %: </label>
+                @Html.TextBoxFor(m => m.AgtPct, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.AgtPct)
+            </div>
+
+            <div class="mb10">
+                <label for="ComLvl" style="width:140px;">Comm Level: </label>
+                @Html.TextBoxFor(m => m.ComLvl, new { @style = "width:275px", @disabled = "disabled" })
+                @Html.HiddenFor(m => m.ComLvl)
+
+            </div>
+            <hr />
+            @*Editable Fields*@
+
+            <div class="mb10">
+                <label for="Wholesaler" style="width:140px;">Wholesaler: </label>
+                @Html.DropDownListFor(m => m.Wholesaler, ViewBag.dWholeSaler as SelectList, new { @style = "width:275px", @class = "s2", required = "required" })
+
+                <label for="PayToWholesaler" style="width:140px;">PayToWholesaler: </label>
+                @Html.DropDownListFor(m => m.PayToWholesaler, ViewBag.dPayToWholesaler as SelectList, new { @style = "width:275px", @class = "s2", required = "required" })
+            </div>
+
+            <div class="mb10">
+                <label for="Internal" style="width:140px;">Internal: </label>
+                @Html.DropDownListFor(m => m.Internal, ViewBag.dInternal as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="Recruiter" style="width:140px;">Recruiter: </label>
+                @Html.DropDownListFor(m => m.Recruiter, ViewBag.dRecruiter as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="Channel" style="width:140px;">Channel: </label>
+                @Html.DropDownListFor(m => m.Channel, ViewBag.dChannel as SelectList, new { @style = "width:275px", @class = "s2", required = "required" })
+
+                <label for="PlChannel" style="width:140px;">PL Channel: </label>
+                @Html.DropDownListFor(m => m.PlChannel, ViewBag.dPlChannel as SelectList, new { @style = "width:275px", @class = "s2", required = "required" })
+            </div>
+
+            <div class="mb10">
+                <label for="NSM" style="width:140px;">NSM: </label>
+                @Html.DropDownListFor(m => m.NSM, ViewBag.dNSM as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="BrokerDealer" style="width:140px;">BrokerDealer: </label>
+                @Html.DropDownListFor(m => m.BrokeDealer, ViewBag.dBrokerDealer as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="ThruBD" style="width:140px;">ThruBD: </label>
+                @Html.DropDownListFor(m => m.ThruBD, ViewBag.dThruBD as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="Agency" style="width:140px;">Agency: </label>
+                @Html.DropDownListFor(m => m.Agency, ViewBag.dAgency as SelectList, new { @style = "width:275px", @class = "s2" })
+            </div>
+
+            <div class="mb10">
+                <label for="AgencyMP" style="width:140px;">AgencyMP: </label>
+                @Html.DropDownListFor(m => m.AgencyMP, ViewBag.dAgencyMP as SelectList, new { @style = "width:275px", @class = "s2" })
+
+                <label for="ArchiveDateTime" style="width:140px;">Archive DateTime: </label>
+                @Html.TextBox("ArchiveDateTime", DateTime.Now.ToString(), new { @style = "width:275px" })
+            </div>
+
+            <div class="mb10">
+                <label for="ArchiveReason" style="width:140px;vertical-align:top;">Archive Reason: </label>
+                @Html.TextAreaFor(m => m.ArchiveReason, new { @style = "width:700px" })
+
+            </div>
+            <div class="col-xs-12 text-center">
+                <input type="submit" id="btnsave" onclick="parent.submitSearchForm();" value="Save" style="width:120px;" />
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jqueryvalidate")
+@Scripts.Render("~/bundles/select2")
+<script src="~/Scripts/jquery.dirtyforms.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.s2').select2({
+            minimumResultsForSearch: Infinity,
+            placeholder: ' ',
+            allowClear: true,
+        });
+
+        $('#btnsave').attr('disabled', 'disabled');
+        $('#CMRecordEdit')
+            .validate({
+                rules: {
+                    ArchiveDateTime: "date"
+                }
+            });
+
+        $('#CMRecordEdit').dirtyForms().on("dirty.dirtyforms", function () {
+            $(this).find('#btnsave').removeAttr('disabled');
+        }).on("clean.dirtyforms", function () {
+            $(this).find('#btnsave').attr('disabled', 'disabled');
+        });
+    });
+</script>

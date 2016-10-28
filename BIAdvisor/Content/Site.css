@@ -1,0 +1,401 @@
+﻿body {
+    padding-top: 45px;
+    padding-bottom: 20px;
+    background: #f9f9f9;
+    font-size:14px;
+}
+
+.navbar-brand.b1{
+    background: url('img/WVLogo1.png') no-repeat;
+    width:55px;
+    /*margin:5px 5px 0 -10px !important;*/
+    /*margin-top:5px;
+    margin-right:5px;*/
+}
+.navbar-brand.b2{    
+    font-family: 'Cinzel', serif;
+    padding-top: 17px;
+    vertical-align: bottom;
+    font-size: 30px;
+}
+
+/* Remove print link */
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 2.5%;
+    box-shadow: 0px 0px 10px 2px rgba(31, 73, 125, 0.8);
+    display: inline-block;
+    width: 95%;
+    /*overflow-x: scroll;*/
+    position: relative;
+    justify-content: center;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+label {
+    font-size: 13px !important;
+    font-weight: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 490px;*/
+    font-size: 14px;
+    padding: 3px;
+    color: #303030;
+}
+
+input, select {
+    height: 26px;
+}
+
+    input[type=checkbox] {
+        height: 15px;
+    }
+
+    input[disabled], select[disabled], input[readonly], textarea[readonly], textarea[disabled] {
+        background: #fff;
+        border: 1px solid #ddd;
+        color: #909090;
+    }
+
+    input[type=checkbox], input[type=radio] {
+        vertical-align: middle;
+    }
+
+    input[type=radio] {
+        bottom: 2px;
+    }
+
+.toast {
+    opacity: 1 !important;
+}
+
+.pre {
+	position: fixed;
+    left: 1.5%;
+    right: 1.5%;
+    top: 95px;
+    width: 97%;
+    height: 320px;
+    z-index: 9999;
+    background: #f9f9f9;
+}
+
+/* Popup Related Styles*/
+.bpopup {
+    background-color: #fff;
+    border-radius: 15px;
+    color: #000;
+    display: none;
+    padding: 20px;
+    box-shadow: 0 0 25px 2px #999;
+    min-width: 400px;
+    min-height: 180px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.b-popup {
+    width: 800px;
+    top: 20px;
+}
+
+.s-popup {
+    width: 450px;
+    padding-top: 40px;
+}
+
+.button.bClose {
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 7px 7px 7px 7px;
+    position: absolute;
+    right: -22px;
+    top: -12px;
+    background: url('img/CloseModal.png') no-repeat;
+    height: 31px;
+    z-index: 1;
+}
+
+/* Popup Partials Related Styles*/
+.pop-head {
+    font-size: 20px;
+    background-color: #4d4d4d;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 15px 15px 0 0;
+}
+
+
+
+/* Autocomplete Table Related Styles */
+.ui-autocomplete {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.drop {
+    background: white url('img/dropdown.png') right no-repeat !important;
+    padding-right: 17px;
+    border: 1px solid #a9a9a9;
+}
+
+input[disabled].drop, input[readonly].drop {
+    background: white url('img/dropdown-disabled.png') right no-repeat !important;
+    padding-right: 17px;
+    /*border: 1px solid #ddd;*/
+}
+
+table.table-autocomplete {
+    width: 100%;
+    max-width: 600px !important;
+    border: solid 1px #B6B6B6;
+}
+
+.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
+    z-index: 10001;
+}
+
+table.table-autocomplete tr {
+    border-bottom: solid 1px #B6B6B6;
+}
+
+table.table-autocomplete tbody tr:hover {
+    background-color: #ccc;
+}
+
+table.table-autocomplete tbody {
+    background: #fff;
+}
+
+table.table-autocomplete thead tr {
+    background-color: #606060;
+    color: #fff;
+}
+
+    table.table-autocomplete thead tr th {
+        padding: 5px;
+        white-space: nowrap;
+    }
+
+table.table-autocomplete td {
+    border-left: solid 1px #B6B6B6;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+
+/* Custom Page Styles */
+#main {
+    margin-top: 20px;
+}
+
+#frmPayee {
+    max-width: 100%;
+    margin-top: 20px;
+    position: absolute;
+}
+
+#payeeDeals {
+    margin-top: 310px;
+}
+
+#frmDeal {
+    width: 975px;
+}
+
+.edit,.editcm{
+    background: url("img/Edit.png") no-repeat 6px center;
+    width: 25px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+.del {
+    background: url("img/Delete16.png") no-repeat 6px center;
+    width: 25px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+.deleteDeal {
+    background: url("img/Delete.png") no-repeat 6px center;
+    width: 35px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+}
+
+.view,.viewcma {
+    background: url("img/view.gif") no-repeat 6px center;
+    width: 25px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+.add {
+    background: url("img/Add_Button.png") no-repeat 6px center;
+    width: 25px;
+    height: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+.warn {
+    background: url("img/Warning.png") no-repeat 6px center;
+    width: 25px;
+    height: 20px;
+    padding-left: 30px;
+}
+
+.refresh {
+    background: url("img/view_refresh.png") no-repeat 6px center;
+    font-size:15px;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.sort12{
+    background: url("img/Sort12.png") no-repeat 6px center;
+    font-size:15px;
+    padding-left: 40px;
+    cursor: pointer;
+}
+.sortaz{
+    background: url("img/SortAZ.png") no-repeat 6px center;
+    font-size:15px;
+    padding-left: 40px;
+    cursor: pointer;
+}
+/* Custom Table Styles */
+.ctable tbody tr:hover, .ctable tbody tr:nth-child(odd):hover {
+    background-color: #ccc;
+}
+
+.ctable tbody tr:nth-child(odd) {
+    background-color: #e7e7e7;
+}
+
+.ctable tbody td {
+    padding: 5px !important;
+    color: #303030;
+    font-size: 13px !important;
+    white-space: nowrap;
+}
+
+.ctable thead td {
+    padding: 8px 5px !important;
+}
+
+.ctable thead tr {
+    background-color: #606060;
+    color: #fff;
+    font-size: 13px !important;
+}
+
+
+
+
+.input-validation-error, input.error, span.error {
+    box-shadow: red 0 0 5px;
+    border: 1px solid red;
+}
+
+.field-validation-error {
+    color: #c20202;
+}
+
+.error label.error {
+    color: #c20202 !important;
+    padding: 5px;
+    display: block;
+}
+
+.alert {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 13px;
+}
+
+.modal-dd {
+    width: 188px !important;
+}
+
+
+/* Overrides */
+.nop {
+    padding: 0 !important;
+}
+
+.nom {
+    margin: 0 !important;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+    padding-left: 10px;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+h3 {
+    margin: 15px 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.navbar-inverse {
+    background: linear-gradient(#07315c, #0c4a81);
+}
+
+.head {
+    background: linear-gradient(#ddd, #bbb);
+}
+#LoadingDiv {
+    position: fixed;
+    top: 50%;
+    left: 55%;
+    background-color: #373636;
+    padding: 20px;
+    color: white !important;
+    margin: -10px 0 0 -250px;
+    z-index: 2000;
+    display: none;
+}

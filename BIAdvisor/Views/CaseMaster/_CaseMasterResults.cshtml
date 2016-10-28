@@ -1,0 +1,57 @@
+﻿@using System.Data
+@model System.Data.DataTable
+
+@if (Model != null)
+{
+    <table class="table table-striped ctable">
+        <thead>
+            <tr>
+                <td></td>
+                <td><label id="CaseID" class="highlight" onclick="subCaseID()">CaseID</label></td>
+                <td>Policy#</td>
+                <td><label class="highlight" id="CrtDate" onclick="subCrtDate()">Created</label></td>
+                <td>AgtNo</td>
+                <td><label class="highlight" id="Agent" onclick="subAgent()">Agent</label></td>
+                <td>Agent%</td>
+                <td>ComLevel</td>
+                <td>WholeSaler</td>
+                <td>PayToWholesaler</td>
+                <td>Internal</td>
+                <td>Recruiter</td>
+                <td>Channel</td>
+                <td>PLChannel</td>
+                <td>NSM</td>
+                <td>BrokerDealer</td>
+                <td>ThruBD</td>
+                <td>Agency</td>
+                <td>AgencyBD</td>
+            </tr>
+        </thead>
+        @foreach (var dr in Model.AsEnumerable())
+                {
+            <tr>
+                <td>
+                    <a href="#" id="@dr["AGPCOMID"]" class="editcm"></a>
+                </td>
+                <td>@dr["CASEID"]</td>
+                <td>@dr["POLNO"]</td>
+                <td>@(Convert.ToDateTime(dr["CRTDATE"]).ToShortDateString())</td>
+                <td>@dr["AGTNO"]</td>
+                <td>@dr["NAME"]</td>
+                <td>@dr["AGTPCT"]</td>
+                <td>@dr["COMLVL"]</td>
+                <td>@dr["wholesaler"]</td>
+                <td>@dr["payToWholesaler"]</td>
+                <td>@dr["internal"]</td>
+                <td>@dr["recruiter"]</td>
+                <td>@dr["channel"]</td>
+                <td>@dr["PLChannel"]</td>
+                <td>@dr["NSM"]</td>
+                <td>@dr["brokerDealer"]</td>
+                <td>@dr["ThruBD"]</td>
+                <td>@dr["Agency"]</td>
+                <td>@dr["AgencyMP"]</td>
+            </tr>
+        }
+    </table>
+}

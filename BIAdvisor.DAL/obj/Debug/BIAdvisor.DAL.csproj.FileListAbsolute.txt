@@ -1,0 +1,9 @@
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\bin\Debug\BIAdvisor.DAL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\bin\Debug\BIAdvisor.DAL.pdb
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Debug\BIAdvisor.DAL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Debug\BIAdvisor.DAL.pdb
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Debug\BIAdvisor.DAL.csprojResolveAssemblyReference.cache
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.DAL\bin\Debug\BIAdvisor.DAL.dll
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.DAL\bin\Debug\BIAdvisor.DAL.pdb
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.DAL\obj\Debug\BIAdvisor.DAL.dll
+D:\upwork\JohnFransis\Sources\SalesmanRewamp\BIAdvisor.DAL\obj\Debug\BIAdvisor.DAL.pdb

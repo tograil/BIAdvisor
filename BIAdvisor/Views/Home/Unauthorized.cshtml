@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Unauthorized";
+}
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <p style="margin:50px 0; font-size:large;">
+            Hi @User.Identity.Name! You do not have access to this site. You will now be redirected to wealthvest.com
+        </p>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        window.location.href = 'http://wealthvest.com';
+    }, 4000);
+</script>

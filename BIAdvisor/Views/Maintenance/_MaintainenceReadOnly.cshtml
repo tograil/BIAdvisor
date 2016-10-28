@@ -1,0 +1,239 @@
+﻿@using System.Web.Optimization
+@model BIAdvisor.Web.Models.DealMaintenanceViewModel
+@Styles.Render("~/Content/css")
+<style>
+    body {
+        padding-top: 15px !important;
+        background: #fff !important;
+    }
+
+    .mb10 {
+        margin-bottom: 4px;
+        padding-left: 15px;
+    }
+
+    .mb20 {
+        margin-bottom: 10px;
+        padding-left: 15px;
+    }
+
+    input, select, textarea {
+        /*font-size: 14px;*/
+        padding: 2px;
+    }
+
+    label {
+        padding-left: 15px;
+    }
+</style>
+
+<div class="row" id="frmDeal">
+    <div class="col-xs-12">
+        <div class="mb10 nop">
+            <h3 style="width:150px; display:inline-block; margin:15px 0 10px;">Deal Criteria</h3>
+        </div>
+        <div class="mb10">
+            <label for="DealCriteria" style="width:140px;">Criteria: </label>
+            @Html.TextBoxFor(m => m.DealCriteria, new { @style = "width:735px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Carrier" style="width:140px;">Carrier / Line: </label>
+            @Html.TextBoxFor(m => m.Carrier, new { @style = "width:275px", @disabled = "disabled" })
+            /
+            @Html.TextBoxFor(m => m.ProductLine, new { @style = "width:2%", @disabled = "disabled" })
+
+
+            <label for="CarrierAttributeDescription" style="width:146px;padding-left:8px;">Carrier Attribute: </label>
+            @Html.TextBoxFor(m => m.CarrierAttributeDescription, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Product" style="width:140px;">Product: </label>
+            @Html.TextBoxFor(m => m.Product, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="ProductAttributeDescription" style = "width:177px; padding-left:40px;">Product Attribute: </label>
+            @Html.TextBoxFor(m => m.ProductAttributeDescription, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Wholesaler" style="width:140px;">Wholesaler: </label>
+            @Html.TextBoxFor(m => m.Wholesaler, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="WholesalerRole" style="width:177px; padding-left:40px;">Role: </label>
+            @Html.TextBoxFor(m => m.WholesalerRole, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Wholesaler" style="width:140px;">BD: </label>
+            @Html.TextBoxFor(m => m.BrokerDealer, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="BDAttributeDescription" style="width:177px; padding-left:40px;">BD Attribute: </label>
+            @Html.TextBoxFor(m => m.BDAttributeDescription, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="BrokerDealerInHierarchy" style="width:140px;">BD In Hierarchy: </label>
+            @Html.TextBoxFor(m => m.BrokerDealerInHierarchy, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="SubmitDate" style="width:177px; padding-left:40px;">Submit Date: </label>
+            @Html.TextBox("SubmitDate", Model.SubmitDate.HasValue ? Model.SubmitDate.Value.ToShortDateString() : "", new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Channel" style="width:140px;">Channel: </label>
+            @Html.TextBoxFor(m => m.Channel, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="StatementDate" style="width:177px; padding-left:40px;">Statement Date: </label>
+            @Html.TextBox("SubmitDate", Model.StatementDate.HasValue ? Model.StatementDate.Value.ToShortDateString() : "", new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Internal" style="width:140px;">Internal: </label>
+            @Html.TextBoxFor(m => m.Internal, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="ProducerID" style="width:140px;">Producer: </label>
+            @Html.TextBoxFor(m => m.ProducerID, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="MSA" style="width:177px; padding-left:40px;">MSA: </label>
+            @Html.TextBoxFor(m => m.MSA, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="Recruiter" style="width:140px;">Recruiter: </label>
+            @Html.TextBoxFor(m => m.Recruiter, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="RecruiterAttributeDescription" style="width:177px; padding-left:40px;">Recruiter Attribute: </label>
+            @Html.TextBoxFor(m => m.RecruiterAttributeDescription, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="MPPartner" style="width:140px;">MP Partner: </label>
+            @Html.TextBoxFor(m => m.MPPartner, new { @style = "width:275px", @disabled = "disabled" })
+
+            <label for="Notes" style="padding-left:40px;">Notes: </label>
+        </div>
+
+        <div class="mb10">
+            <label for="PayeeGroup" style="width:140px;vertical-align:top;">Payee Group: </label>
+            @Html.TextBoxFor(m => m.PayeeGroup, new { @style = "width:275px;vertical-align:top;", @disabled = "disabled" })
+
+            @Html.TextAreaFor(m => m.Notes, new { @style = "margin-left:40px; width:417px;", @readonly="readonly" })
+        </div>
+    </div>
+    @*Deal Calculation*@
+    <div class="col-xs-12">
+        <h3 style="margin-top:0;">
+            Deal Calculation
+        </h3>
+
+        <div class="mb10">
+            <div class="row nom nop">
+                <div class="col-xs-1 nop" style="width:350px;">
+                    <div style="margin-bottom:8px;">
+                        <label for="CalculationID" style="width:140px;">Calculation Code: </label>
+                        @Html.TextBoxFor(m => m.CalculationCode, new { @style = "width:200px; vertical-align:top;", @disabled = "disabled" })
+                    </div>
+                    <div>
+                        <label for="DealCap" style="width:140px;">Deal Cap: </label>
+                        @Html.TextBoxFor(m => m.DealCap, new { @style = "width:100px;", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="col-xs-1 nop" style="width:528px;">
+                    @Html.TextArea("CalculationDescription", new { @style = "width:528px;resize: none", rows = 3, @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="mb10">
+            <label for="CarrierLevel" style="width:140px;">Carrier Level: </label>
+            @Html.TextBoxFor(m => m.CarrierLevel, new { @style = "width:200px", @disabled = "disabled" })
+
+            <label for="Street">Street: </label>
+            @Html.CheckBoxFor(m => m.Street, new { @disabled = "disabled" })
+
+            <label for="LOA">LOA: </label>
+            @Html.CheckBoxFor(m => m.LOA, new { @disabled = "disabled" })
+
+            <label for="ExpDelta" style="width:290px; padding-right: 10px; text-align: right;">Exp Delta: </label>
+            @Html.TextBoxFor(m => m.ExpDelta, new { @style = "width: 101px;", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="VirtualCarrierLevel" style="width:140px;">Virtual Level: </label>
+            @Html.TextBoxFor(m => m.VirtualCarrierLevel, new { @style = "width:200px", @disabled = "disabled" })
+
+            <label for="PayIndexKey" style="width:253px;text-align:right;">Pay Index: </label>
+            @Html.TextBoxFor(m => m.PayIndexKey, new { @style = "width:275px", @disabled = "disabled" })            
+        </div>
+
+        <div class="mb10">
+            <label for="PctGross" style="width:140px">Pct Gross:</label>
+            @Html.TextBoxFor(m => m.PctGross, new { @style = "width:100px;", @disabled = "disabled" })
+
+            <label for="DeductionModel" style="width:353px;text-align:right;">Deduction: </label>
+            @Html.TextBoxFor(m => m.DeductionModel, new { @style = "width:275px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="PctPremium" style="width:140px">Pct Premium:</label>
+            @Html.TextBoxFor(m => m.PctPremium, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label for="Directive" style="width:353px;text-align:right;">Directive: </label>
+            @Html.TextBoxFor(m => m.Directive, new { @style = "width:275px;", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="PctOverride" style="width:140px">Pct Override:</label>
+            @Html.TextBoxFor(m => m.PctOverride, null, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="margin-left:370px;">Bonus</label>
+            <label style="margin-left:105px;">Push COC</label>            
+        </div>
+
+        <div class="mb10">
+            <label for="PctCarrierLevel" style="width:140px">Pct Carrier Level:</label>
+            @Html.TextBoxFor(m => m.PctCarrierLevel, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:355px; text-align:right;">Amount 1:</label>
+            @Html.TextBoxFor(m => m.Amount1, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:65px;text-align:right;padding:0;">Rate 1:</label>
+            @Html.TextBoxFor(m => m.Rate1, new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+
+        <div class="mb10">
+            <label for="PctWholesalerNet" style="width:140px">Pct Wholesaler Net:</label>
+            @Html.TextBoxFor(m => m.PctWholesalerNet, null, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:355px; text-align:right;">Amount 2:</label>
+            @Html.TextBoxFor(m => m.Amount2, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:65px;text-align:right;padding:0;">Rate 2:</label>
+            @Html.TextBoxFor(m => m.Rate2, null, new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+        <div class="mb10">
+            <label style="width:140px;">Contingent Bonus:</label>
+            @Html.TextBoxFor(m => m.ContingentBonus, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:355px; text-align:right;">Amount 3:</label>
+            @Html.TextBoxFor(m => m.Amount3, null, new { @style = "width:100px", @disabled = "disabled" })
+
+            <label style="width:65px;text-align:right;padding:0;">Rate 3:</label>
+            @Html.TextBoxFor(m => m.Rate3, null, new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+        <div class="mb10">
+            <label style="width:140px;">Year End Bonus:</label>
+            @Html.TextBoxFor(m => m.YearEndBonus, new { @style = "width:100px", @disabled = "disabled" })
+        </div>
+        <div class="col-xs-12">
+            <label style="width:140px;">Recruiter CR&nbsp;/&nbsp;DR: </label>
+            @Html.TextBoxFor(m => m.RecruiterCredit, null, new { @style = "width:44px;", @disabled = "disabled" }) /
+            @Html.TextBoxFor(m => m.RecruiterDebit, null, new { @style = "width:44px;", @disabled = "disabled" })
+            
+        </div>
+
+    </div>
+</div>

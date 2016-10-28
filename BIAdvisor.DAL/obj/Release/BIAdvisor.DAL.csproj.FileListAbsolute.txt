@@ -1,0 +1,5 @@
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\bin\Release\BIAdvisor.DAL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\bin\Release\BIAdvisor.DAL.pdb
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Release\BIAdvisor.DAL.csprojResolveAssemblyReference.cache
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Release\BIAdvisor.DAL.dll
+C:\Users\Sonu\Desktop\Workspaces\BIAdvisor\BIAdvisor.DAL\obj\Release\BIAdvisor.DAL.pdb

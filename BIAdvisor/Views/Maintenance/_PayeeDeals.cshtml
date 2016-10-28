@@ -1,0 +1,72 @@
+﻿@model BIAdvisor.Web.Models.PayeeDealsViewModel
+@using System.Data;
+@using BIAdvisor.Web.Models
+@{
+    var colCount = 0;
+    DataTable schemaTable = null;
+    string[] classNames = null;
+
+    if (ViewBag.schema != null)
+    {
+        schemaTable = ViewBag.schema as DataTable;
+        colCount = Math.Min(schemaTable.Rows.Count, Model.dtDeals.Columns.Count);
+        classNames = new string[colCount];
+
+        for (int i = 1; i < colCount; i++)
+        {
+            switch (schemaTable.Rows[i]["DataType"].ToString())
+            {
+                case "System.String":
+                    classNames[i] = schemaTable.Rows[i]["ColumnSize"].ToString() == "1" ? "b" : "l";
+                    break;
+                case "System.DateTime":
+                    classNames[i] = "d";
+                    break;
+                case "System.Decimal":
+                    classNames[i] = "n";
+                    break;
+                default:
+                    classNames[i] = "l";
+                    break;
+            }
+        }
+    }
+}
+<div id="deals" style="height:550px;overflow:auto;">
+    @if (schemaTable != null && Model.dtDeals != null)
+    {
+        <!-- Payee Deals Grid-->
+        <table class="table ctable">
+            <thead>
+                <tr>
+                    @* Set the header add button if user is not readonly *@
+                    <td>
+                        <a href="#" id="0"
+                           class="@((Model.boolPublished && Model.userRole != UserRole.SuperUser) || Model.userRole == UserRole.ReadOnly ? "" : "add")">
+                        </a>
+                    </td>
+                    @for (int i = 2; i < colCount; i++)
+                    {
+                        <td class="@classNames[i]">@schemaTable.Rows[i]["ColumnName"].ToString()</td>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @* Loop through the table rows*@
+                @foreach (var dr in Model.dtDeals.AsEnumerable())
+                {
+                    <tr>
+                        <td>
+                            <a href="#" id="@dr["PayeeDealKey"]" class="@(!Model.boolPublished || Model.userRole == UserRole.SuperUser ? "edit" : "view")"></a>
+                        </td>
+                        @* Above field is fixed, loop through the rest of the fields in the DataRow *@
+                        @for (int i = 2; i < colCount; i++)
+                        {
+                            <td class="@classNames[i]">@(classNames[i] == "d" && !(dr[i] is DBNull) ? Convert.ToDateTime(dr[i]).ToShortDateString() : dr[i])</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

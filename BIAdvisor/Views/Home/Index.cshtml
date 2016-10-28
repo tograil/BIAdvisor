@@ -1,0 +1,261 @@
+﻿@using System.Data;
+@using System.Web.Optimization
+@using BIAdvisor.Web.Models
+@model BIAdvisor.Web.Models.SearchViewModel
+@{
+    ViewBag.Title = "Payee Search";
+    var timeframelist = new List<SelectListItem>() {
+               new SelectListItem { Text = "Current Deals Only", Value = "1" },
+               new SelectListItem { Text = "All Deals", Value = "2" }
+    };
+
+    var colCount = 0;
+    DataTable schemaTable = null;
+    string[] classNames = null;
+
+    if (ViewBag.schema != null)
+    {
+        schemaTable = ViewBag.schema as DataTable;
+        colCount = schemaTable.Rows.Count;
+        classNames = new string[colCount];
+
+        for (int i = 1; i < colCount; i++)
+        {
+            switch (schemaTable.Rows[i]["DataType"].ToString())
+            {
+                case "System.String":
+                    classNames[i] = schemaTable.Rows[i]["ColumnSize"].ToString() == "1" ? "b" : "l";
+                    break;
+                case "System.DateTime":
+                    classNames[i] = "d";
+                    break;
+                case "System.Decimal":
+                    classNames[i] = "n";
+                    break;
+                default:
+                    classNames[i] = "l";
+                    break;
+            }
+        }
+    }
+
+    UserRole userRole = UserRole.ReadOnly;
+    Enum.TryParse<UserRole>(ViewBag.userRole != null ? ViewBag.userRole.ToString() : "", out userRole);
+}
+
+<style>
+    /*Bool*/
+    .b {
+        text-align: center;
+    }
+
+    /*Date, Number*/
+    .d, .n {
+        text-align: right;
+    }
+
+    /*Default*/
+    .l {
+        text-align: left;
+    }
+</style>
+<div class="row">
+    <div class="col-xs-12 head">
+        <h3>Payee Search</h3>
+    </div>
+</div>
+<div class="row" id="main">
+    <!-- Search Panel -->
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "formSearch", @style = "border-bottom: 1px solid #ccc;" }))
+    {
+        @Html.HiddenFor(m => m.boolModel)
+        <div class="mb10">
+            <label style="width: 40px;">Payee: </label>
+            <select name="Name" id="Name" class="js-data-example-ajax" style="width:21.5%">
+                <option value="@Model.Name" selected="selected">@Model.Name</option>
+            </select>
+
+            <label style="width: 40px;text-align:right;">Type: </label>
+            <select name="Type" id="Type" style="width:170px" class="s2pop" data-s2val="@Model.Type"></select>
+
+            <label style="width: 40px;text-align:right;">Role: </label>
+            <input name="Role" id="Role" type="text" value="@Model.Role" style="width:50px;vertical-align:top" readonly />&nbsp;
+
+            @Html.DropDownListFor(m => m.Timeframe, new SelectList(timeframelist, "Value", "Text"), new { @style = "width:170px;text-align:right;" })
+            &nbsp;
+            <span class="refresh"></span>
+            <input style="width:8%" type="submit" value="Search" />
+            &nbsp;
+            <a href="#" id="prntResults">Print</a>
+        </div>
+    }
+    <div class="nop" style="overflow:auto; height:860px;">
+        @if (schemaTable != null && Model.Payees != null)
+        {
+            <!-- Search Results Grid-->
+            <div id="results">
+                <table class="table ctable">
+                    <thead>
+                        <tr>
+                            @* Set the header add button if user is not readonly *@
+                            <td><i class="@(userRole != UserRole.ReadOnly ? "add" : "")"></i></td>
+                            <td>
+                                @if (userRole != UserRole.ReadOnly)
+                                {
+                                    <i class="del tog"></i>
+                                }
+                            </td>
+                            @for (int i = 1; i < colCount; i++)
+                            {
+                                <td class="@classNames[i]">@schemaTable.Rows[i]["ColumnName"].ToString()</td>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* Loop through the table rows*@
+                        @foreach (var dr in Model.Payees.AsEnumerable())
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Maintenance/Index/@dr["PayeeKey"]"
+                                       class="@((dr["Published"].ToString() == "Y" && userRole == UserRole.SuperUser) ||
+                                            (dr["Published"].ToString() != "Y" && userRole != UserRole.ReadOnly) ? "edit" : "view")"></a>
+                                </td>
+                                <td>
+                                    @if (userRole != UserRole.ReadOnly)
+                                    {
+                                        //Only show delete icon if superuser mode is on or if the record is not published
+                                        <span data-id="@dr["PayeeKey"]" style="display:none; text-align:center;"
+                                              class="@(dr["Published"].ToString() != "Y" || userRole == UserRole.SuperUser ? "del" : "")"></span>
+                                    }
+                                </td>
+                                @* Above 2 fields are fixed, loop through the rest of the fields in the DataRow *@
+                                @for (int i = 1; i < colCount; i++)
+                                {
+                                    <td class="@classNames[i]">@(classNames[i] == "d" ? Convert.ToDateTime(dr[i]).ToShortDateString() : dr[i])</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Add Popup -->
+<div class="bpopup s-popup" id="popup1">
+    <div class="pop-head">Add Payee</div>
+    <span class="button bClose"></span>
+    <div class="row">
+        <div class="mb10"></div>
+        @using (Html.BeginForm("AddPayee", "Home", FormMethod.Post, new { @id = "formAdd" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="error"></div>
+            <div class="mb10">
+                <label style="width: 88px;">Payee: </label>
+                <input type="text" name="PayeeName" id="PayeeName" style="width:310px" required title="Payee Name is required" />
+            </div>
+            <div class="mb10">
+                <label style="width: 88px;">Type: </label>
+                <select name="PayeeType" id="PayeeType" style="width:190px" required></select>
+                @*<input type="text" name="PayeeType" id="PayeeType" style="width:190px;" class="drop" required title="Payee Type is required" />*@
+
+                <label style="width: 48px; text-align:right;">Role: </label>
+                @Html.TextBox("PayeeRole", null, new { Style = "width: 65px;", @readonly = "" })
+            </div>
+            <div class="mb20">
+                <label style="width: 88px;">Effective Date: </label>
+                <input style="width: 100px;" id="EffectiveDate" name="EffectiveDate" placeholder="MM/DD/YYYY" type="text" data-default="@DateTime.Today.ToShortDateString()">
+                @*@Html.TextBox("EffectiveDate", DateTime.Today.ToShortDateString(), new { Style = "width: 100px;", placeholder = "MM/DD/YYYY" })*@
+
+                <label style="width: 103px; text-align:right;">Expiration Date: </label>
+                <input style="width: 100px;" id="ExpirationDate" name="ExpirationDate" placeholder="MM/DD/YYYY" type="text" data-default="@(new DateTime(2099, 12, 31).ToShortDateString())">
+                @*@Html.TextBox("ExpirationDate", new DateTime(2099, 12, 31).ToShortDateString(), new { Style = "width: 100px;", placeholder = "MM/DD/YYYY" })*@
+            </div>
+            <div class="mb10 text-center">
+                <div class="col-xs-12">
+                    <input type="submit" style="width:100px;" value="Add" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Delete Popup -->
+<div class="bpopup s-popup" id="popup2">
+    <div class="pop-head">Delete Payee</div>
+    <span class="button bClose"></span>
+    <div class="row">
+        <div class="mb10"></div>
+        @using (Html.BeginForm("DeletePayee", "Home", FormMethod.Post, new { @id = "formDelete" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("PayeeDel")
+            <div class="mb10">
+                <label style="width: 88px;">Payee: </label>
+                @Html.TextBox("NameDel", null, new { Style = "width: 71.5%;", @readonly = "readonly" })
+            </div>
+            <div class="mb20">
+                <label style="width: 88px;">Effective Date: </label>
+                @Html.TextBox("EfDel", null, new { Style = "width: 100px;", @readonly = "readonly" })
+
+                <label style="width: 99px; text-align:right;">Expiration Date: </label>
+                @Html.TextBox("ExDel", null, new { Style = "width: 100px;", @readonly = "readonly" })
+            </div>
+            <div class="mb10 text-center">
+                <div class="row">
+                    <span class="warn">&nbsp;Please click Delete to confirm deletion.</span>
+                </div>
+            </div>
+            <div class="mb10 text-center">
+                <div class="col-xs-12">
+                    <input type="submit" style="width:100px;" value="Delete" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section styles{
+    @Styles.Render("~/Content/s2")
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryvalidate")
+    @Scripts.Render("~/bundles/bpopup")
+    @Scripts.Render("~/bundles/select2")
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>*@
+    <script>
+        var types = @Html.Raw(Json.Encode(Model.TypesSelectListItems));
+        //$('.ctable').DataTable( {
+        //    dom: 'Bfrtip',
+        //    buttons: [
+        //        'copy', 'csv', 'excel', 'pdf', 'print'
+        //    ]
+        //} );
+
+        //$('form').keydown(function (e) {
+        //    if(e.which == 13){
+        //        $(this).closest('form').submit();
+        //        return false;
+        //    }
+
+        //});
+    </script>
+    @Scripts.Render("~/bundles/home")
+}

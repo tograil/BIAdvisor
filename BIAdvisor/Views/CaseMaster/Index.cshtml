@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "CaseMaster Search";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "GET",
+        UpdateTargetId = "CMResultsTable",
+        LoadingElementId = "LoadingDiv"
+    };
+}
+
+<style>
+    /*Bool*/
+    .b {
+        text-align: center;
+    }
+
+    /*Date, Number*/
+    .d, .n {
+        text-align: right;
+    }
+
+    /*Default*/
+    .l {
+        text-align: left;
+    }
+
+    .highlight {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-12 head">
+        <h3>CaseMaster Search</h3>
+    </div>
+</div>
+<div class="row" id="main">
+    <!-- Search Panel -->
+    @using (Ajax.BeginForm("_CaseMasterResults", new { controller = "CaseMaster" }, options, new { @id = "formSearch", @style = "border-bottom: 1px solid #ccc;" }))
+    {
+        @Html.AntiForgeryToken();
+        <input type="hidden" id="SortColumn" name="SortColumn" value="CaseID" />
+        <input type="hidden" id="SortOrder" name="SortOrder" value="ASC" />
+        <div class="mb10">
+            <label style="text-align:right;">CaseID: </label> &nbsp;
+            @Html.TextBox("CaseID", null, new { style = "width:80px" })
+            &nbsp;&nbsp;
+
+            <label style="text-align:right;">Policy#: </label>&nbsp;
+            @Html.TextBox("PolicyNo", null, new { style = "width:120px" })
+            &nbsp;&nbsp;
+
+            <label style="text-align:right;">Agent: </label>&nbsp;
+            @Html.TextBox("Agent", null, new { style = "width:190px" }) &nbsp;
+            &nbsp;&nbsp;
+
+            <label style="text-align:right;">Wholesaler: </label>&nbsp;
+            @Html.TextBox("WholeSaler", null, new { style = "width:190px" })&nbsp;
+            &nbsp;&nbsp;
+
+            <label style="text-align:right;">Pay To Wholesaler: </label>
+            @Html.TextBox("PayToWholeSaler", null, new { style = "width:190px" })&nbsp;
+
+            <input style="width:100px" type="submit" value="Search" />
+            @Html.ActionLink("Archives", "Archives",new { controller = "CaseMaster" },new { style= "padding-left:10px" })
+        </div>
+    }
+    <div class="nop" id="CMResultsTable" style="overflow:auto; height:860px;">
+    </div>
+</div>
+
+<!-- Add Popup -->
+<div class="bpopup b-popup" id="popupcm">
+    <div class="pop-head">Edit Case Record</div>
+    <span class="button bClose"></span>
+    <div class="cmContent"></div>
+</div>
+@section styles{
+    @Styles.Render("~/Content/s2")
+}
+@section scripts{
+    <script src="~/Scripts/jquery.bpopup.min.js"></script>
+    <script>
+        $(document).on('click', '.editcm', showModalCM);
+
+        function showModalCM() {
+            debugger;
+            $('#popupcm').bPopup({
+                modalClose: false,
+                content: 'iframe',
+                iframeAttr: 'width="950" height="550" scrolling="no" frameborder="0"',
+                scrollBar: true,
+                contentContainer: '.cmContent',
+                onClose: reloadListPage,
+                loadUrl: '/CaseMaster/_EditCaseMasterRecord?AGPCOMID=' + $(this).attr('id')
+            }).css({
+                width: '980px',
+                height: '575px'
+            });
+        }
+
+        function reloadListPage() {
+            submitSearchForm();
+        }
+
+        function subCaseID() {
+                $("#SortColumn").val('CaseID');
+            if ($("#SortOrder").val() == "ASC") {
+                $("#SortOrder").val("DESC");
+            } else {
+                $("#SortOrder").val("ASC");
+            }
+
+                submitSearchForm();
+        }
+
+        function subCrtDate() {
+                $("#SortColumn").val('CrtDate');
+            if ($("#SortOrder").val() == "ASC") {
+                $("#SortOrder").val("DESC");
+            } else {
+                $("#SortOrder").val("ASC");
+            }
+
+                submitSearchForm();
+        }
+
+        function subAgent() {
+            $("#SortColumn").val('Name');
+            if ($("#SortOrder").val() == "ASC") {
+                $("#SortOrder").val("DESC");
+            } else {
+                $("#SortOrder").val("ASC");
+            }
+
+            submitSearchForm();
+        }
+
+
+        function submitSearchForm() {
+            $("#formSearch").submit();
+        }
+        
+    </script>
+}
+@Html.Partial("_LoadingDiv")

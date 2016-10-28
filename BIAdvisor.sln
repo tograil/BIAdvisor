@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIAdvisor", "BIAdvisor\BIAdvisor.csproj", "{56367D47-528D-429A-8632-BA1C71E7B04E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIAdvisor.BL", "BIAdvisor.BL\BIAdvisor.BL.csproj", "{F3DD6EBC-4C51-48CA-AEA7-DE1F6045AD58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIAdvisor.DAL", "BIAdvisor.DAL\BIAdvisor.DAL.csproj", "{2F9B5117-DE24-467D-A6C6-63280E12C28E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56367D47-528D-429A-8632-BA1C71E7B04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56367D47-528D-429A-8632-BA1C71E7B04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56367D47-528D-429A-8632-BA1C71E7B04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56367D47-528D-429A-8632-BA1C71E7B04E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3DD6EBC-4C51-48CA-AEA7-DE1F6045AD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3DD6EBC-4C51-48CA-AEA7-DE1F6045AD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3DD6EBC-4C51-48CA-AEA7-DE1F6045AD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3DD6EBC-4C51-48CA-AEA7-DE1F6045AD58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9B5117-DE24-467D-A6C6-63280E12C28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9B5117-DE24-467D-A6C6-63280E12C28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9B5117-DE24-467D-A6C6-63280E12C28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9B5117-DE24-467D-A6C6-63280E12C28E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
